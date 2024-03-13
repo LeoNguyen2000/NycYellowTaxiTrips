@@ -5,17 +5,21 @@ import altair as alt
 import matplotlib.pyplot as plt
 import duckdb
 import pyarrow.parquet as pq
+import os
+
+# Define base directory
+base_dir = os.path.dirname(__file__)
 
 # Load data (replace this with your actual data loading code)
-trips = pq.read_table('C:/Users/leong/OneDrive/Desktop/P2/data/yellow_tripdata_2023-01.parquet').to_pandas()
-data = pd.read_csv('C:/Users/leong/OneDrive/Desktop/P2/data/taxi_zone_lookup.csv')
+trips = pq.read_table(os.path.join(base_dir,'data/yellow_tripdata_2023-01.parquet')).to_pandas()
+data = pd.read_csv(os.path.join(base_dir,'data/taxi_zone_lookup.csv'))
 
 # Perform an inner join on 'PULocationID' and 'LocationID'
 merged_data = pd.merge(trips, data, how='inner', left_on='PULocationID', right_on='LocationID')
 # Perform an inner join on 'DOLocationID' and 'LocationID'
 merged_data2 = pd.merge(trips, data, how='inner', left_on='DOLocationID', right_on='LocationID')
 
-st.title("Charts")
+st.title("APP")
 st.sidebar.markdown("""# Charts
 """)
 
